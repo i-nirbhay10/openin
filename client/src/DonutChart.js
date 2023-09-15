@@ -63,7 +63,8 @@ const DonutChart = () => {
             display: false, // Hide the legend
           },
         },
-        cutout: 110, // Adjust the value to control ring thickness
+        cutout: 70, // Adjust the value to control ring thickness
+        radius: 90,
       };
 
       // Create the chart
@@ -83,15 +84,15 @@ const DonutChart = () => {
   }, [productdata]);
 
   return (
-    <div className="flex flex-col gap-3 md:flex-row justify-evenly items-center">
-      <div className="">
+    <div className="flex flex-col xl:flex-row justify-evenly items-center">
+      <div style={{ height: "200px" }}>
         <canvas ref={chartRef} />
       </div>
-      <div className="ml-4">
+      <div className="flex gap-2 xl:block">
         <div>
           <div className="flex items-center">
             <div className="w-4 h-4 rounded-full bg-[#98D89E]"></div>
-            <div className="flex font-bold ml-2 ">
+            <div className="flex font-semibold ml-2 ">
               {productdata.top_product}
             </div>
           </div>
@@ -100,9 +101,9 @@ const DonutChart = () => {
           </div>
         </div>
         <div>
-          <div className="flex items-center mt-2">
+          <div className="flex items-center">
             <div className="w-4 h-4 rounded-full bg-[#F6DC7D]"></div>
-            <div className="flex  font-bold ml-2 ">
+            <div className="flex font-semibold ml-2 ">
               {productdata.mediam_product}
             </div>
           </div>
@@ -112,9 +113,9 @@ const DonutChart = () => {
         </div>
 
         <div>
-          <div className="flex items-center mt-2">
+          <div className="flex items-center ">
             <div className="w-4 h-4 rounded-full bg-[#EE8484] "></div>
-            <div className="flex font-bold ml-2 ">
+            <div className="flex font-semibold ml-2 ">
               {productdata.low_product}
             </div>
           </div>

@@ -55,7 +55,7 @@ const SignUp = () => {
   const loginwithgoogle = async (credentialResponse) => {
     try {
       const decodecred = jwt_decode(credentialResponse.credential);
-      const res = await fetch("/googlelogin", {
+      const res = await fetch("http://localhost:5000/googlelogin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -103,16 +103,16 @@ const SignUp = () => {
         {/* signup code */}
 
         <div className="col-span-1 h-screen bg-[#F8FAFF]">
-          <div className="flex flex-col justify-center p-4 min-h-full mx-auto w-full sm:max-w-lg   ">
-            <div className="">
-              <h2 className="mt-10 text-5xl font-bold text-gray-900">
+          <div className="flex flex-col justify-center p-4 min-h-full mx-auto w-full sm:max-w-md">
+            <div>
+              <h2 className="mt-10 text-5xl font-semibold text-gray-900">
                 Sign up
               </h2>
-              <h2 className="mt-5 text-xl text-gray-900">
+              <h2 className="mt-3 text-xl text-gray-900">
                 Sign up to your account
               </h2>
-              <div className="flex flex-nowrap justify-between mt-5">
-                <div className="flex items-center basis-auto w-full py-2.5 text-sm rounded-md appearance-none">
+              <div className="flex items-center justify-center justify-between gap-2 mt-5">
+                <div className="flex items-center w-full py-2.5 text-sm rounded-xl">
                   <GoogleLogin
                     className="appearance-none"
                     onSuccess={(credentialResponse) => {
@@ -123,12 +123,12 @@ const SignUp = () => {
                     }}
                   />
                 </div>
-                <div className="flex items-center w-full bg-white px-3 text-[#858585] text-lg rounded-md">
+                <div className="flex items-center w-full bg-white text-[#858585] p-1.5 text-md rounded border border-gray-250">
                   <FaApple className="mr-2" /> Sign in with Apple
                 </div>
               </div>
             </div>
-            <div className="mt-5 bg-white-900 p-4 pt-6  ">
+            <div className="bg-white-900 p-4">
               <form className="space-y-6" method="POST">
                 <div>
                   <label
@@ -215,7 +215,7 @@ const SignUp = () => {
                 </div>
               </form>
             </div>
-            <p className="mt-5 text-center text-xl text-gray-500">
+            <p className="mt-2 text-center text-xl text-gray-500">
               Already have an account?
               <Link
                 to="/"

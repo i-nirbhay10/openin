@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const jwt = require("jsonwebtoken");
 // const bcrypt = require("bcrypt");
 
 //using cookie parser
@@ -75,11 +76,11 @@ router.post("/signin", async (req, res) => {
       const token = await userlogin.generateAuthToken();
       res.cookie("jwtoken", token, {
         expires: new Date(Date.now() + 604800000),
-        httpOnly: true,
+        // httpOnly: true,
       });
-      // console.log(token);
 
       res.status(200).send({ message: "logged in " });
+      console.log("login worked out");
     } else {
       res.status(400).send({ message: "invalid information" });
     }
@@ -100,8 +101,9 @@ router.post("/googlelogin", async (req, res) => {
         const token = await userlogin.generateAuthToken();
         res.cookie("jwtoken", token, {
           expires: new Date(Date.now() + 604800000),
-          httpOnly: true,
+          // httpOnly: true,
         });
+        // console.log(token);
 
         res.status(200).send({ message: "logged in " });
       } else {
@@ -119,7 +121,7 @@ router.post("/googlelogin", async (req, res) => {
           const token = await usercheck.generateAuthToken();
           res.cookie("jwtoken", token, {
             expires: new Date(Date.now() + 604800000),
-            httpOnly: true,
+            // httpOnly: true,
           });
         }
 
@@ -132,13 +134,14 @@ router.post("/googlelogin", async (req, res) => {
 });
 
 //dashboard request with middeleware
-router.get("/dashboard", auth, (req, res) => {
+router.get("/dashboard", auth, async (req, res) => {
   try {
-    console.log("rout dash run");
+    console.log("dasboard in");
     res.send(req.topid_data);
-    console.log("response from dashboard");
+    console.log("dashboard worked out");
   } catch (error) {
-    console.log(error);
+    console.log("Error in dashboard route", error);
+    res.status(500).send("Internal server error");
   }
 });
 

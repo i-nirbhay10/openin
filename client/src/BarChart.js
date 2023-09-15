@@ -14,16 +14,16 @@ const BarChart = () => {
           data: [500, 400, 300, 200],
           backgroundColor: "#98D89E", // Semi-transparent bar color for Guest
           borderColor: "#FFFFFF",
-          borderWidth: 5,
-          barThickness: 50,
+          borderWidth: 3,
+          barThickness: 25,
         },
         {
           label: "User",
           data: [100, 200, 300, 400],
           backgroundColor: "#EE8484", // Semi-transparent bar color for User
           borderColor: "#FFFFFF",
-          borderWidth: 5,
-          barThickness: 50,
+          borderWidth: 3,
+          barThickness: 25,
         },
       ],
     };

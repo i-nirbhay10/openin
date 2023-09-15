@@ -86,14 +86,14 @@ const Toggleform = () => {
           </div>
         ) : (
           <div className="flex justify-center items-center w-full h-full">
-            <div className="cursor-pointer  my-auto h-full">
+            <div className="cursor-pointer my-auto h-full">
               <div
                 onClick={toggleForm}
-                className="bg-[#F2F2F2] h-28 w-28 px-4 py-2 flex justify-center items-center rounded-full"
+                className="bg-[#F2F2F2] h-20 w-20 px-4 py-2 flex justify-center items-center rounded-full"
               >
                 <FaPlus className="text-[#999CA0] text-3xl" />
               </div>
-              <div className="text-2xl mt-4 text-center">Add Profile</div>
+              <div className="text-xl mt-4 text-center">Add Profile</div>
             </div>
           </div>
         )}

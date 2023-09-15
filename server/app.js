@@ -2,29 +2,22 @@ const dotenv = require("dotenv");
 const express = require("express");
 const app = express();
 
-// useing dotenv
-dotenv.config({ path: "./.env" });
+dotenv.config({ path: "./.env" }); // useing dotenv
 
-//requireing and using corse
-const cors = require("cors");
-
+const cors = require("cors"); //requireing and using corse
 const corsOptions = {
   origin: "*",
-  credentials: true, //access-control-allow-credentials:true
+  credentials: true,
   optionSuccessStatus: 200,
 };
 
-app.use(cors(corsOptions)); // Use this after the variable declaration
+app.use(cors(corsOptions));
 
-//for json data reeding
-app.use(express.json());
+app.use(express.json()); //for json data reeding
 
-//link the router files with app
-app.use(require("./router/routs"));
+app.use(require("./router/routs")); //link the router files with app
 
-// app listening
-
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5000; // app listening
 
 app.listen(port, () => {
   console.log(`app renning on port no ${port}`);

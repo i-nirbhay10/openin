@@ -90,18 +90,17 @@ const Signin = () => {
         {/* signin code */}
 
         <div className="col-span-1 h-screen bg-[#F8FAFF]">
-          <div className="flex flex-col justify-center p-4 min-h-full mx-auto w-full sm:max-w-lg  ">
+          <div className="flex flex-col justify-center p-4 min-h-full mx-auto w-full sm:max-w-md ">
             <div className="">
-              <h2 className="mt-10 text-5xl font-bold text-gray-900">
+              <h2 className="mt-10 text-5xl font-semibold text-gray-900">
                 Sign In
               </h2>
-              <h2 className="mt-5 text-xl text-gray-900">
+              <h2 className="mt-2 text-xl text-gray-900">
                 Sign in to your account
               </h2>
-              <div className="flex justify-between mt-5">
+              <div className="flex items-center justify-center justify-between gap-2 mt-5">
                 <div className="flex items-center w-full py-2.5 text-sm rounded-xl">
                   <GoogleLogin
-                    style={{ backgroundColor: "red" }}
                     onSuccess={(credentialResponse) => {
                       loginwithgoogle(credentialResponse);
                     }}
@@ -110,12 +109,12 @@ const Signin = () => {
                     }}
                   />
                 </div>
-                <div className="flex items-center w-full bg-white text-[#858585] px-1 text-lg rounded-md">
+                <div className="flex items-center w-full bg-white text-[#858585] p-1.5 text-md rounded border border-gray-250">
                   <FaApple className="mr-2" /> Sign in with Apple
                 </div>
               </div>
             </div>
-            <div className="mt-5 p-4 pt-6">
+            <div className=" p-4">
               <form className="space-y-6" method="POST">
                 <div>
                   <label
@@ -180,7 +179,7 @@ const Signin = () => {
                 </div>
               </form>
             </div>
-            <p className="mt-5 text-center text-xl text-gray-500">
+            <p className="mt-2 text-center text-xl text-gray-500">
               Don’t have an account?
               <Link
                 to="/Signup"
