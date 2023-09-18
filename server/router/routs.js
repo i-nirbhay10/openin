@@ -1,95 +1,80 @@
 const express = require("express");
 const router = express.Router();
-const jwt = require("jsonwebtoken");
-// const bcrypt = require("bcrypt");
-
-//using cookie parser
 const cookieParser = require("cookie-parser");
-router.use(cookieParser());
-
-// use middeleware file
 const auth = require("../middleware/auth");
+const data = require("../userregister/datafom");
+
+router.use(cookieParser());
 
 // database connection
 require("../db/connection");
-const data = require("../userregister/datafom");
 
-// mongoose
-const { connection } = require("mongoose");
-
-// create routing
+// Home router
 router.get("/", (req, res) => {
   res.send(
-    "hello world this is open project home page from router created by nirbhay"
+    "Hello, world! This is the open project home page created by Nirbhay."
   );
 });
 
-// signup users
+// TO NEW USER REGISTRATION
 router.post("/register", async (req, res) => {
   const { email, password, cpassword } = req.body;
 
-  console.log(req.body);
-
   if (!email || !password || !cpassword) {
-    res.status(422).json({ error: "plese fill all fieled" });
-    console.log("all fesld not fill ");
+    return res.status(422).json({ error: "Please fill value in all fields" });
   }
 
   try {
     const passmatch = password === cpassword;
-
     const userexist = await data.findOne({ email: email });
+
     if (userexist) {
-      res.status(422).json({ error: "user is allready exist" });
+      return res.status(422).json({ error: "User already exists" });
     } else {
-      const user = new data({
-        email,
-        password,
-        cpassword,
-      });
+      const user = new data({ email, password, cpassword });
 
       if (passmatch) {
         await user.save();
-        res.status(201).json({ message: "registration successful" });
+        return res.status(201).json({ message: "Registration successful" });
       } else {
-        res.json({ error: "password not matched" });
+        return res.status(422).json({ error: "Passwords do not match" });
       }
     }
   } catch (error) {
-    console.log("registration feald error");
+    console.error("Registration failed:", error);
+    res.status(500).json({ error: "Registration failed" });
   }
 });
 
-// login users
+// TO SIGN IN
 router.post("/signin", async (req, res) => {
   const { email, password } = req.body;
-  console.log(req.body);
-  try {
-    if (!email || !password) {
-      res.status(400).send({ message: "fill data in all feals" });
-      res.status(400).json({ message: "fill data in all feals" });
-    }
 
+  if (!email || !password) {
+    return res.status(400).json({ message: "Please fill value in all fields" });
+  }
+
+  try {
     const userlogin = await data.findOne({ email: email, password: password });
 
     if (userlogin) {
       const token = await userlogin.generateAuthToken();
       res.cookie("jwtoken", token, {
         expires: new Date(Date.now() + 604800000),
-        // httpOnly: true,
+        httpOnly: true,
       });
 
-      res.status(200).send({ message: "logged in " });
-      console.log("login worked out");
+      return res.status(200).json({ message: "Logged in" });
     } else {
-      res.status(400).send({ message: "invalid information" });
+      return res.status(400).json({ message: "Invalid information" });
     }
-  } catch (err) {
-    console.log("login fail error");
+  } catch (error) {
+    console.error("Login failed:", error);
+    res.status(500).json({ error: "Login failed" });
   }
 });
 
-// google signup or login
+// TO google resister signin
 router.post("/googlelogin", async (req, res) => {
   const { email, clientid } = req.body;
 
@@ -101,11 +86,10 @@ router.post("/googlelogin", async (req, res) => {
         const token = await userlogin.generateAuthToken();
         res.cookie("jwtoken", token, {
           expires: new Date(Date.now() + 604800000),
-          // httpOnly: true,
+          httpOnly: true,
         });
-        // console.log(token);
 
-        res.status(200).send({ message: "logged in " });
+        return res.status(200).json({ message: "Logged in" });
       } else {
         const password = email + clientid;
         const user = new data({
@@ -115,44 +99,41 @@ router.post("/googlelogin", async (req, res) => {
         });
 
         await user.save();
-
         const usercheck = await data.findOne({ email: email });
+
         if (usercheck) {
           const token = await usercheck.generateAuthToken();
           res.cookie("jwtoken", token, {
-            expires: new Date(Date.now() + 604800000),
-            // httpOnly: true,
+            // expires: new Date(Date.now() + 604800000),
+            httpOnly: true,
           });
         }
 
-        res.status(200).send({ message: "registration successful" });
+        return res.status(200).json({ message: "Registration successful" });
       }
     } catch (error) {
-      console.log(error);
+      console.error("Google login failed:", error);
+      res.status(500).json({ error: "Google login failed" });
     }
   }
 });
 
-//dashboard request with middeleware
 router.get("/dashboard", auth, async (req, res) => {
   try {
-    console.log("dasboard in");
     res.send(req.topid_data);
-    console.log("dashboard worked out");
   } catch (error) {
-    console.log("Error in dashboard route", error);
+    console.error("Error in dashboard route", error);
     res.status(500).send("Internal server error");
   }
 });
 
-// loging out
+// TO  USER LOG OUT
 router.get("/logout", (req, res) => {
   res.clearCookie("jwtoken", { path: "/" });
-  console.log("server logout cookie clear");
-  res.status(200).send("user loged out from server");
+  console.log("Server logout: Cookie cleared");
+  res.status(200).send("User logged out from server");
 });
 
-// create API
 router.get("/productapi", (req, res) => {
   res.send([
     {
@@ -167,31 +148,5 @@ router.get("/productapi", (req, res) => {
     },
   ]);
 });
-
-// // contect massage
-// router.post("/contect", auth, async (req, res) => {
-//   try {
-//     const { firstname, email, message } = req.body;
-//     console.log(req.body);
-
-//     if (!firstname || !email || !message) {
-//       res.json({ error: "plz fill all filed" });
-//     }
-
-//     const match = await data.findOne({ _id: req.userID });
-
-//     if (match) {
-//       const matchget = await match.messagepush(firstname, email, message);
-//       console.log(matchget);
-//       await match.save();
-//       console.log("msg saved");
-
-//       // res.status(201).json({ message: "message saved successfully" });
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     console.log("server contect not run");
-//   }
-// });
 
 module.exports = router;

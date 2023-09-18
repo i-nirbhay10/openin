@@ -30,7 +30,9 @@ const Dashboard = () => {
   const callingdata = async () => {
     try {
       console.log("dash in");
-      const res = await fetch("/dashboard", {
+      // const jwtToken = document.cookie;
+      // console.log("jwtgetting", jwtToken);
+      const res = await fetch("http://localhost:5000/dashboard", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -39,16 +41,16 @@ const Dashboard = () => {
         credentials: "include",
       });
 
+      if (!res.ok) {
+        console.log("terror");
+        throw new Error("Failed to fetch data");
+      }
+
       const data = await res.json();
       console.log(data);
-      if (!res.ok) {
-        const error = new Error(res.error);
-        console.log("terror");
-        throw error;
-      }
     } catch (error) {
-      console.log(error);
-      console.log("error from dash");
+      console.error(error);
+      console.log("error from front dash");
       navigate("/");
     }
   };
@@ -230,3 +232,5 @@ const DashboardCard = ({ title, value, bgColor, textColor, icon, iconbg }) => (
 );
 
 export default Dashboard;
+
+// "proxy": "http://localhost:5000",

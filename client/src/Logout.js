@@ -7,7 +7,7 @@ const Logout = () => {
   const exituser = async () => {
     try {
       if (window.confirm("Are you sure")) {
-        const res = await fetch("/logout", {
+        const res = await fetch("http://localhost:5000/logout", {
           method: "GET",
           headers: {
             Accept: "appllication/json",

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { GoogleLogin } from "@react-oauth/google";
-import { FaFacebook, FaTwitter, FaInstagram, FaApple } from "react-icons/fa";
+import { FaLinkedinIn, FaGithub, FaMailBulk, FaApple } from "react-icons/fa";
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -15,15 +15,17 @@ const Signin = () => {
     try {
       e.preventDefault();
 
-      const res = await fetch("/signin", {
+      const res = await fetch("http://localhost:5000/signin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({ email, password }),
       });
 
       const data = await res.json();
+      // console.log(data);
 
       if (res.status === 400 || !data) {
         window.alert("invelid cradintial");
@@ -42,17 +44,19 @@ const Signin = () => {
   const loginwithgoogle = async (credentialResponse) => {
     try {
       const decodecred = jwt_decode(credentialResponse.credential);
-      const res = await fetch("/googlelogin", {
+      const res = await fetch("http://localhost:5000/googlelogin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({
           email: decodecred.email,
           clientid: credentialResponse.clientId,
         }),
       });
       const data = await res.json();
+      // console.log(data);
       if (res.status === 400 || !data) {
         window.alert("invelid cradintial");
         console.log("invelid cradintial");
@@ -75,14 +79,23 @@ const Signin = () => {
             <div className="text-center text-5xl">Board.</div>
           </div>
           <div className="flex justify-center text-4xl gap-4 mb-6">
-            <a href="/" className="text-white mx-2 hover:text-gray-300">
-              <FaFacebook />
+            <a
+              href="https://www.linkedin.com/in/nirbhay-verma-441695217/"
+              className="text-white mx-2 hover:text-gray-300"
+            >
+              <FaLinkedinIn />
             </a>
-            <a href="/" className="text-white mx-2 hover:text-gray-300">
-              <FaTwitter />
+            <a
+              href="https://github.com/i-nirbhay10"
+              className="text-white mx-2 hover:text-gray-300"
+            >
+              <FaGithub />
             </a>
-            <a href="/" className="text-white mx-2 hover:text-gray-300">
-              <FaInstagram />
+            <a
+              href="mailto:nirbhayverma10@gmail.com"
+              className="text-white mx-2 hover:text-gray-300"
+            >
+              <FaMailBulk />
             </a>
           </div>
         </div>
@@ -98,8 +111,8 @@ const Signin = () => {
               <h2 className="mt-2 text-xl text-gray-900">
                 Sign in to your account
               </h2>
-              <div className="flex items-center justify-center justify-between gap-2 mt-5">
-                <div className="flex items-center w-full py-2.5 text-sm rounded-xl">
+              <div className="flex flex-col sm:flex-row text-center items-center justify-center justify-between gap-2 mt-5">
+                <div className="flex items-center md:w-full py-2.5 text-sm rounded-xl">
                   <GoogleLogin
                     onSuccess={(credentialResponse) => {
                       loginwithgoogle(credentialResponse);
@@ -109,7 +122,7 @@ const Signin = () => {
                     }}
                   />
                 </div>
-                <div className="flex items-center w-full bg-white text-[#858585] p-1.5 text-md rounded border border-gray-250">
+                <div className="flex items-center md:w-full bg-white text-[#858585] p-1.5 text-md rounded border border-gray-250">
                   <FaApple className="mr-2" /> Sign in with Apple
                 </div>
               </div>

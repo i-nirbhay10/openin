@@ -115,7 +115,6 @@ const Toggleform = () => {
               <div className="space-y-4">
                 <div>
                   <div className="flex  justify-between">
-                    {/* Added this container */}
                     <button
                       className={`${
                         isBasicSection
@@ -142,7 +141,7 @@ const Toggleform = () => {
                   className="grid grid-cols-1 gap-4"
                   style={{ overflowY: "auto" }}
                 >
-                  {/* Add 'overflowY: auto' to allow scrolling if content exceeds the max height */}
+                  {/* 'overflowY: auto' to allow scrolling if content exceeds the max height */}
                   {isBasicSection ? (
                     <>
                       <div>
@@ -256,14 +255,14 @@ const Toggleform = () => {
 const Profileitems = ({ id_name, social, ficon, sicon }) => {
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 p-3 justify-between xl:pb-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-1 p-2 justify-between xl:pb-10">
         <div className="col-span-1   ">
           <h1 className="flex text-md underline">
             {ficon} {id_name}
           </h1>
         </div>
         <div className="col-span-1 ">
-          <h1 className="flex text-xl underline ">
+          <h1 className="flex text-md underline ">
             {sicon} {social}
           </h1>
         </div>

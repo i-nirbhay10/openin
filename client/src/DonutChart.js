@@ -15,7 +15,7 @@ const DonutChart = () => {
 
   const getdata = async () => {
     try {
-      const res = await fetch("/productapi", {
+      const res = await fetch("http://localhost:5000/productapi", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -63,7 +63,7 @@ const DonutChart = () => {
             display: false, // Hide the legend
           },
         },
-        cutout: 70, // Adjust the value to control ring thickness
+        cutout: 70, //  value to control ring thickness
         radius: 90,
       };
 
@@ -78,7 +78,6 @@ const DonutChart = () => {
       // Clean up when the component unmounts
       return () => {
         myChart.destroy();
-        console.log("runeffect");
       };
     }
   }, [productdata]);

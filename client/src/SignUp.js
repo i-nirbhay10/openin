@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { GoogleLogin } from "@react-oauth/google";
-import { FaFacebook, FaTwitter, FaInstagram, FaApple } from "react-icons/fa";
+import { FaLinkedinIn, FaGithub, FaMailBulk, FaApple } from "react-icons/fa";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const SignUp = () => {
     e.preventDefault();
     const { email, password, cpassword } = user;
 
-    const res = await fetch("/register", {
+    const res = await fetch("http://localhost:5000/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -37,10 +37,9 @@ const SignUp = () => {
         cpassword,
       }),
     });
+    // const data = await res.json();
 
-    const data = await res.json();
-
-    if (res.status === 422 || !data) {
+    if (res.status === 422) {
       window.alert("invelid cradintial ");
       console.log("invelid cradintial ");
       console.log(res);
@@ -60,6 +59,7 @@ const SignUp = () => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({
           email: decodecred.email,
           clientid: credentialResponse.clientId,
@@ -82,20 +82,29 @@ const SignUp = () => {
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="col-span-1 lg:col-span-1 font-bold bg-[#4285F4] text-white h-screen flex flex-col justify-center">
+        <div className="col-span-1 font-bold bg-[#4285F4] text-white h-screen flex flex-col justify-center">
           <div className="p-10 text-3xl">Logo</div>
           <div className="flex-grow flex flex-col items-center justify-center">
             <div className="text-center text-5xl">Board.</div>
           </div>
           <div className="flex justify-center text-4xl gap-4 mb-6">
-            <a href="/" className="text-white mx-2 hover:text-gray-300">
-              <FaFacebook />
+            <a
+              href="https://www.linkedin.com/in/nirbhay-verma-441695217/"
+              className="text-white mx-2 hover:text-gray-300"
+            >
+              <FaLinkedinIn />
             </a>
-            <a href="/" className="text-white mx-2 hover:text-gray-300">
-              <FaTwitter />
+            <a
+              href="https://github.com/i-nirbhay10"
+              className="text-white mx-2 hover:text-gray-300"
+            >
+              <FaGithub />
             </a>
-            <a href="/" className="text-white mx-2 hover:text-gray-300">
-              <FaInstagram />
+            <a
+              href="mailto:nirbhayverma10@gmail.com"
+              className="text-white mx-2 hover:text-gray-300"
+            >
+              <FaMailBulk />
             </a>
           </div>
         </div>
@@ -224,7 +233,6 @@ const SignUp = () => {
                 Sign in here
               </Link>
             </p>
-            {/* </div> */}
           </div>
         </div>
 

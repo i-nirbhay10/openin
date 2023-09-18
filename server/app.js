@@ -1,17 +1,18 @@
-const dotenv = require("dotenv");
 const express = require("express");
+const dotenv = require("dotenv");
 const app = express();
 
 dotenv.config({ path: "./.env" }); // useing dotenv
 
 const cors = require("cors"); //requireing and using corse
 const corsOptions = {
-  origin: "*",
+  origin: process.env.FRENTREQ || "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionSuccessStatus: 200,
 };
 
-app.use(cors(corsOptions));
+app.use(cors(corsOptions)); //call corse
 
 app.use(express.json()); //for json data reeding
 
